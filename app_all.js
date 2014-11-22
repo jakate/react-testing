@@ -24,9 +24,7 @@ var TodoList = React.createClass({displayName: 'TodoList',
       });
 
       donelist = React.createElement("ul", {className: "itemList doneones"}, 
-        React.createElement(ReactCSSTransitionGroup, {transitionName: "example", transitionLeave: false}, 
-          done
-        )
+        done
       );
     }
 

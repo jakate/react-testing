@@ -24,9 +24,7 @@ var TodoList = React.createClass({
       });
 
       donelist = <ul className='itemList doneones'>
-        <ReactCSSTransitionGroup transitionName="example" transitionLeave={false}>
-          {done}
-        </ReactCSSTransitionGroup>
+        {done}
       </ul>;
     }
 
