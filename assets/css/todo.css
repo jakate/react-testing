@@ -67,6 +67,7 @@ button:hover {
   float: left;
   width: 80%;
   border: none;
+  border-radius:0;
 }
 .todoInputForm button {
   width: 20%;
