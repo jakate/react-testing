@@ -154,6 +154,6 @@ button:hover {
 @media screen and (max-width: 600px) {
   .todoApp {
     width: 100%;
-    padding: 2%;
+    padding: 5%;
   }
 }
