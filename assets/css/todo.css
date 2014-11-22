@@ -1,0 +1,168 @@
+/* General ---- */
+body {
+  font-family: Arial;
+  background: #efefef;
+}
+* {
+  box-sizing: border-box;
+}
+input[type=text],
+button {
+    outline: 0;
+}
+button {
+  cursor: pointer;
+  display: block;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  background: #999;
+  color: #fff;
+}
+button:hover {
+  background: #efefef;
+  color: #333;
+}
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.shadow {
+  box-shadow: 1px 1px 3px 0 rgba(0,0,0,0.2);
+}
+.hide {
+  display: none;
+}
+
+
+
+
+
+
+
+/* Todo ---- */
+.todoApp {
+  width: 600px;
+  margin: 0 auto;
+  background: #e2e2e2;
+  padding: 30px;
+}
+
+
+
+
+
+
+
+/* Todo Input ---- */
+.todoInputForm {
+  margin: 0 0 20px 0;
+  box-shadow: 1px 1px 3px 0 rgba(0,0,0,0.2);
+}
+.todoInputForm input[type=text]{
+  padding: 21px 5%;
+  font-size: 16px;
+  float: left;
+  width: 85%;
+  border: none;
+}
+.todoInputForm button {
+  width: 15%;
+  height: 60px;
+  padding: 2px 5% 0;
+  line-height: 0px;
+  font-size: 20px;
+  float: right;
+}
+
+
+
+
+
+
+
+/* Todo List ---- */
+.itemList {
+  list-style-type: none;
+  margin:0;
+  padding:0;
+}
+.doneones li:first-child{
+  border-top: 2px dashed #0033ff;
+}
+.itemList .done{
+  opacity: 0.6;
+}
+.itemList li{
+  background: rgba(0,0,0,0.1);
+  color: #555;
+  font-size: 16px;
+}
+.itemList li:nth-child(odd){
+  background: rgba(0,0,0,0.05);
+}
+.itemList li label{
+  padding: 20px 10px;
+  display: block;
+  cursor: pointer;
+}
+.itemList li label:hover{
+  background: rgba(0, 0, 0, 0.1);
+}
+.itemList li .delete{
+  float: right;
+  display: block;
+}
+.itemList li span.disabled{
+  display: none;
+}
+.itemList li span{
+  margin-left: 10px;
+  float: left;
+  display: block;
+}
+.itemList li input[type=checkbox] {
+  float: left;
+  display: block;
+}
+.itemList li .date{
+  color: #999;
+  font-size: 12px;
+}
+
+
+
+
+
+
+
+/* Media queries ---- */
+@media screen and (max-width: 600px) {
+  .todoApp {
+    width: 100%;
+  }
+}
+
+
+
+
+
+
+
+/* Animations ---- */
+/*.listUpdate-enter {
+  opacity: 0.01;
+  transition: all .2s ease-in;
+}
+.listUpdate-enter.listUpdate-enter-active {
+  opacity: 1;
+}
+.listUpdate-leave {
+  opacity: 1;
+  transition: all .2s ease-in;
+}
+.listUpdate-leave.listUpdate-leave-active {
+  opacity: 0.01;
+}
+*/
