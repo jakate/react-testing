@@ -61,14 +61,15 @@ button:hover {
   box-shadow: 1px 1px 3px 0 rgba(0,0,0,0.2);
 }
 .todoInputForm input[type=text]{
-  padding: 21px 5%;
+  height: 60px;
+  padding: 20px 20px;
   font-size: 16px;
   float: left;
-  width: 85%;
+  width: 80%;
   border: none;
 }
 .todoInputForm button {
-  width: 15%;
+  width: 20%;
   height: 60px;
   padding: 2px 5% 0;
   line-height: 0px;
