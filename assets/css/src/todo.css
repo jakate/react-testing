@@ -89,7 +89,6 @@ button:hover {
   list-style-type: none;
   margin:0;
   padding:0;
-  overflow: hidden;
   perspective: 800px;
 }
 .doneones li:first-child{
@@ -103,7 +102,7 @@ button:hover {
   display: block;
   cursor: pointer;
   transform-style: preserve-3d;
-  transform-origin: 0 0;
+  transform-origin: 50% 50%;
   backface-visibility: hidden;
 }
 .itemList li:hover{
@@ -169,10 +168,20 @@ button:hover {
 
 /* Animations ---- */
 
-.example-enter {
+/*.example-enter {
   transition: all 0.3s ease-out;
   transform: rotateX( -90deg );
 }
 .example-enter.example-enter-active {
   transform: rotateY( 0deg );
 }
+
+.example-leave {
+  opacity: 1;
+  transition: all .2s ease-in;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transform: scale(1.1);
+}*/

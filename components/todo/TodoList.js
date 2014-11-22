@@ -31,9 +31,7 @@ var TodoList = React.createClass({
     return (
       <div className="shadow">
         <ul className='itemList'>
-          <ReactCSSTransitionGroup transitionName="example" transitionLeave={false}>
-            {items}
-          </ReactCSSTransitionGroup>
+          {items}
         </ul>
         {donelist}
       </div>

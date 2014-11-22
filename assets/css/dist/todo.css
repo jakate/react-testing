@@ -89,7 +89,6 @@ button:hover {
   list-style-type: none;
   margin:0;
   padding:0;
-  overflow: hidden;
   -webkit-perspective: 800px;
           perspective: 800px;
 }
@@ -105,9 +104,9 @@ button:hover {
   cursor: pointer;
   -webkit-transform-style: preserve-3d;
           transform-style: preserve-3d;
-  -webkit-transform-origin: 0 0;
-      -ms-transform-origin: 0 0;
-          transform-origin: 0 0;
+  -webkit-transform-origin: 50% 50%;
+      -ms-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
 }
@@ -174,13 +173,20 @@ button:hover {
 
 /* Animations ---- */
 
-.example-enter {
-  -webkit-transition: all 0.3s ease-out;
-          transition: all 0.3s ease-out;
-  -webkit-transform: rotateX( -90deg );
-          transform: rotateX( -90deg );
+/*.example-enter {
+  transition: all 0.3s ease-out;
+  transform: rotateX( -90deg );
 }
 .example-enter.example-enter-active {
-  -webkit-transform: rotateY( 0deg );
-          transform: rotateY( 0deg );
+  transform: rotateY( 0deg );
 }
+
+.example-leave {
+  opacity: 1;
+  transition: all .2s ease-in;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transform: scale(1.1);
+}*/
