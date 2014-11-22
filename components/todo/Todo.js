@@ -16,9 +16,7 @@ var Todo = React.createClass({displayName: 'Todo',
     var undone =_.reject(this.state.data, function(task){
       return task.done == true;
     });
-
     localStorage.setItem('todoItems', JSON.stringify(undone));
-
     this.setState({data: undone});
   },
   updateTask: function(task){

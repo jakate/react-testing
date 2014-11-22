@@ -1,3 +1,5 @@
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 var TodoList = React.createClass({displayName: 'TodoList',
   updateItems: function(task) {
     this.props.updateTask(task);
@@ -13,20 +15,29 @@ var TodoList = React.createClass({displayName: 'TodoList',
         );
     });
 
-    done = done.map(function (task) {
-        return (
-          React.createElement(TodoItem, {task: task, className: task.done === true ? 'done' : 'undone', key: task.ts, update: self.updateItems})
-        );
-    });
+    var donelist;
+    if(done.length > 0) {
+      done = done.map(function (task) {
+          return (
+            React.createElement(TodoItem, {task: task, className: task.done === true ? 'done' : 'undone', key: task.ts, update: self.updateItems})
+          );
+      });
+
+      donelist = React.createElement("ul", {className: "itemList doneones"}, 
+        React.createElement(ReactCSSTransitionGroup, {transitionName: "example", transitionLeave: false}, 
+          done
+        )
+      );
+    }
 
     return (
       React.createElement("div", {className: "shadow"}, 
         React.createElement("ul", {className: "itemList"}, 
-          items
+          React.createElement(ReactCSSTransitionGroup, {transitionName: "example", transitionLeave: false}, 
+            items
+          )
         ), 
-        React.createElement("ul", {className: "itemList doneones"}, 
-          done
-        )
+        donelist
       )
     );
   }
@@ -113,9 +124,7 @@ var Todo = React.createClass({displayName: 'Todo',
     var undone =_.reject(this.state.data, function(task){
       return task.done == true;
     });
-
     localStorage.setItem('todoItems', JSON.stringify(undone));
-
     this.setState({data: undone});
   },
   updateTask: function(task){
