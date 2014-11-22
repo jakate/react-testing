@@ -143,26 +143,3 @@ button:hover {
     width: 100%;
   }
 }
-
-
-
-
-
-
-
-/* Animations ---- */
-/*.listUpdate-enter {
-  opacity: 0.01;
-  transition: all .2s ease-in;
-}
-.listUpdate-enter.listUpdate-enter-active {
-  opacity: 1;
-}
-.listUpdate-leave {
-  opacity: 1;
-  transition: all .2s ease-in;
-}
-.listUpdate-leave.listUpdate-leave-active {
-  opacity: 0.01;
-}
-*/

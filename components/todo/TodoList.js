@@ -1,5 +1,3 @@
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-
 var TodoList = React.createClass({
   updateItems: function(task) {
     this.props.updateTask(task);
