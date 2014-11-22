@@ -4,17 +4,18 @@ var TodoItem = React.createClass({
   },
   render: function(){
     var task = this.props.task;
+    var doneDate;
+    if(task.doneDate) {
+      doneDate = <span className="date">
+        ({task.doneDate})
+      </span>
+    }
+
     return(
-      <li className={task.done == true ? 'done' : 'undone'} >
-        <label className="clearfix">
-          <input type='checkbox' checked={task.done} onChange={this.changeState}/>
-            <span className="label">
-              {task.label}
-            </span>
-            <span className={task.doneDate == undefined ? 'date disabled' : 'date'}>
-              ({task.doneDate})
-            </span>
-        </label>
+      <li className={task.done == true ? 'done clearfix' : 'undone clearfix'} onClick={this.changeState}>
+        <span className="checkbox"></span>
+        <span className="label">{task.label}</span>
+        {doneDate}
       </li>
     );
   }

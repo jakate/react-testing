@@ -8,6 +8,13 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        watch: {
+          scripts: {
+            files: ['components/**/*'],
+            tasks: ['quickbuild'],
+          }
+        },
+
         react: {
             jsx: {
               files: {
@@ -27,6 +34,13 @@ module.exports = function(grunt) {
         grunt.task.run(
             'quickbuild'
         );
+    });
+
+    grunt.registerTask('dev', [], function() {
+        grunt.task.run([
+            'quickbuild',
+            'watch',
+        ]);
     });
 
     grunt.registerTask('quickbuild', [], function() {

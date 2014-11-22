@@ -38,17 +38,18 @@ var TodoItem = React.createClass({displayName: 'TodoItem',
   },
   render: function(){
     var task = this.props.task;
+    var doneDate;
+    if(task.doneDate) {
+      doneDate = React.createElement("span", {className: "date"}, 
+        "(", task.doneDate, ")"
+      )
+    }
+
     return(
-      React.createElement("li", {className: task.done == true ? 'done' : 'undone'}, 
-        React.createElement("label", {className: "clearfix"}, 
-          React.createElement("input", {type: "checkbox", checked: task.done, onChange: this.changeState}), 
-            React.createElement("span", {className: "label"}, 
-              task.label
-            ), 
-            React.createElement("span", {className: task.doneDate == undefined ? 'date disabled' : 'date'}, 
-              "(", task.doneDate, ")"
-            )
-        )
+      React.createElement("li", {className: task.done == true ? 'done clearfix' : 'undone clearfix', onClick: this.changeState}, 
+        React.createElement("span", {className: "checkbox"}), 
+        React.createElement("span", {className: "label"}, task.label), 
+        doneDate
       )
     );
   }
