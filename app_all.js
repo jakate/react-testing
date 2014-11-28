@@ -1,9 +1,7 @@
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var TodoList = React.createClass({displayName: 'TodoList',
-  updateItems: function(task) {
-    this.props.updateTask(task);
-  },
+
   render: function() {
     var self = this;
     var items = _.filter(this.props.data, function (task) { return task.done == false; });
@@ -19,7 +17,7 @@ var TodoList = React.createClass({displayName: 'TodoList',
     if(done.length > 0) {
       done = done.map(function (task) {
           return (
-            React.createElement(TodoItem, {task: task, className: task.done === true ? 'done' : 'undone', key: task.ts, update: self.updateItems})
+            React.createElement(TodoItem, {task: task, className: task.done === true ? 'done' : 'undone', key: task.ts})
           );
       });
 
@@ -37,12 +35,15 @@ var TodoList = React.createClass({displayName: 'TodoList',
       )
     );
   }
+
 });
 
 var TodoItem = React.createClass({displayName: 'TodoItem',
+
   changeState: function() {
-    this.props.update(this.props.task);
+    JEvents.dispatchEvent('TASK_CHANGE_STATE', this.props.task);
   },
+
   render: function(){
     var task = this.props.task;
     var doneDate;
@@ -60,19 +61,23 @@ var TodoItem = React.createClass({displayName: 'TodoItem',
       )
     );
   }
+
 });
 
 var TodoInput = React.createClass({displayName: 'TodoInput',
+
   handleSubmit: function(e) {
     e.preventDefault();
     var task = this.refs.task.getDOMNode().value.trim();
-    this.props.submit(task);
+    JEvents.dispatchEvent('TASK_ADDED', task);
     this.refs.task.getDOMNode().value = '';
     return;
   },
+
   componentDidMount: function(){
     this.refs.task.getDOMNode().focus();
   },
+
   render: function() {
     return (
       React.createElement("form", {onSubmit: this.handleSubmit, className: "todoInputForm clearfix shadow"}, 
@@ -81,28 +86,33 @@ var TodoInput = React.createClass({displayName: 'TodoInput',
       )
     );
   }
+
 });
 
 var TodoClear = React.createClass({displayName: 'TodoClear',
+
     handleClick: function(){
-        this.props.clearDone();
+        JEvents.dispatchEvent('CLEAR_DONE_TASKS');
     },
+
     render: function(){
-        var doneLength = _.reject(this.props.data, function(task){
+        var doneCount = _.reject(this.props.data, function(task){
             return task.done == false;
         }).length;
 
-        var hideBtn = doneLength < 1;
+        var hideBtn = doneCount < 1;
 
         return (
             React.createElement("div", {className: hideBtn === true ? 'hide' : ''}, 
-                React.createElement("button", {onClick: this.handleClick}, "Poista valmiit (", doneLength, ")")
+                React.createElement("button", {onClick: this.handleClick}, "Poista valmiit (", doneCount, ")")
             )
         )
     }
+
 });
 
 var Todo = React.createClass({displayName: 'Todo',
+
   handleSubmit: function(task){
     var today = new Date();
 
@@ -116,6 +126,7 @@ var Todo = React.createClass({displayName: 'Todo',
 
     this.setState({data: this.state.data});
   },
+
   clearDone: function(){
     var undone =_.reject(this.state.data, function(task){
       return task.done == true;
@@ -123,9 +134,10 @@ var Todo = React.createClass({displayName: 'Todo',
     localStorage.setItem('todoItems', JSON.stringify(undone));
     this.setState({data: undone});
   },
+
   updateTask: function(task){
     this.state.data.map(function(item){
-      if(item.ts == task.ts) {
+      if(item.ts === task.ts) {
         task.done = task.done == false;
         if(task.done) {
           var today = new Date();
@@ -142,17 +154,34 @@ var Todo = React.createClass({displayName: 'Todo',
       data: this.state.data
     });
   },
+
   getInitialState: function() {
     var data = JSON.parse(localStorage.getItem('todoItems')) || [];
     return { data: data };
   },
+
   render: function() {
+    var self = this;
+
+    JEvents.addEventListener('TASK_ADDED', function(task){
+      self.handleSubmit(task);
+    });
+
+    JEvents.addEventListener('TASK_CHANGE_STATE', function(task){
+      self.updateTask(task);
+    });
+
+    JEvents.addEventListener('CLEAR_DONE_TASKS', function(){
+      self.clearDone();
+    });
+
     return (
       React.createElement("div", {className: "todoApp shadow"}, 
         React.createElement(TodoInput, {submit: this.handleSubmit}), 
-        React.createElement(TodoList, {data: this.state.data, updateTask: this.updateTask}), 
-        React.createElement(TodoClear, {clearDone: this.clearDone, data: this.state.data})
+        React.createElement(TodoList, {data: this.state.data}), 
+        React.createElement(TodoClear, {data: this.state.data})
       )
     );
   }
+
 });

@@ -1,4 +1,5 @@
 var Todo = React.createClass({displayName: 'Todo',
+
   handleSubmit: function(task){
     var today = new Date();
 
@@ -12,6 +13,7 @@ var Todo = React.createClass({displayName: 'Todo',
 
     this.setState({data: this.state.data});
   },
+
   clearDone: function(){
     var undone =_.reject(this.state.data, function(task){
       return task.done == true;
@@ -19,9 +21,10 @@ var Todo = React.createClass({displayName: 'Todo',
     localStorage.setItem('todoItems', JSON.stringify(undone));
     this.setState({data: undone});
   },
+
   updateTask: function(task){
     this.state.data.map(function(item){
-      if(item.ts == task.ts) {
+      if(item.ts === task.ts) {
         task.done = task.done == false;
         if(task.done) {
           var today = new Date();
@@ -38,17 +41,34 @@ var Todo = React.createClass({displayName: 'Todo',
       data: this.state.data
     });
   },
+
   getInitialState: function() {
     var data = JSON.parse(localStorage.getItem('todoItems')) || [];
     return { data: data };
   },
+
   render: function() {
+    var self = this;
+
+    JEvents.addEventListener('TASK_ADDED', function(task){
+      self.handleSubmit(task);
+    });
+
+    JEvents.addEventListener('TASK_CHANGE_STATE', function(task){
+      self.updateTask(task);
+    });
+
+    JEvents.addEventListener('CLEAR_DONE_TASKS', function(){
+      self.clearDone();
+    });
+
     return (
       <div className='todoApp shadow'>
         <TodoInput submit={this.handleSubmit} />
-        <TodoList data={this.state.data} updateTask={this.updateTask}/>
-        <TodoClear clearDone={this.clearDone} data={this.state.data} />
+        <TodoList data={this.state.data} />
+        <TodoClear data={this.state.data} />
       </div>
     );
   }
+
 });

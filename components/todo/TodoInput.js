@@ -1,14 +1,17 @@
 var TodoInput = React.createClass({
+
   handleSubmit: function(e) {
     e.preventDefault();
     var task = this.refs.task.getDOMNode().value.trim();
-    this.props.submit(task);
+    JEvents.dispatchEvent('TASK_ADDED', task);
     this.refs.task.getDOMNode().value = '';
     return;
   },
+
   componentDidMount: function(){
     this.refs.task.getDOMNode().focus();
   },
+
   render: function() {
     return (
       <form onSubmit={this.handleSubmit} className='todoInputForm clearfix shadow'>
@@ -17,4 +20,5 @@ var TodoInput = React.createClass({
       </form>
     );
   }
+
 });
