@@ -10,7 +10,7 @@ var TodoItem = React.createClass({
 
     if(task.doneDate) {
       doneDate = <span className="date">
-        ({task.doneDate})
+        ({moment(new Date(task.doneDate)).fromNow()})
       </span>
     }
 

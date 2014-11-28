@@ -30,7 +30,7 @@ var Todo = React.createClass({displayName: 'Todo',
 
         if(task.done) {
           var today = new Date();
-          task.doneDate = today.getDate() + "." + today.getMonth() + "." + today.getFullYear();
+          task.doneDate = today.getTime();
         }
       }
     });

@@ -54,7 +54,7 @@ var TodoItem = React.createClass({displayName: 'TodoItem',
 
     if(task.doneDate) {
       doneDate = React.createElement("span", {className: "date"}, 
-        "(", task.doneDate, ")"
+        "(", moment(new Date(task.doneDate)).fromNow(), ")"
       )
     }
 
@@ -144,7 +144,7 @@ var Todo = React.createClass({displayName: 'Todo',
 
         if(task.done) {
           var today = new Date();
-          task.doneDate = today.getDate() + "." + today.getMonth() + "." + today.getFullYear();
+          task.doneDate = today.getTime();
         }
       }
     });
