@@ -1,3 +1,5 @@
+var jevents = new JEvents();
+
 React.render(
   React.createElement(Todo, null),
   document.getElementById('todo')

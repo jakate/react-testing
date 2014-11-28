@@ -41,7 +41,7 @@ var TodoList = React.createClass({displayName: 'TodoList',
 var TodoItem = React.createClass({displayName: 'TodoItem',
 
   changeState: function() {
-    JEvents.dispatchEvent('TASK_CHANGE_STATE', this.props.task);
+    jevents.dispatchEvent('TASK_CHANGE_STATE', this.props.task);
   },
 
   render: function(){
@@ -69,7 +69,7 @@ var TodoInput = React.createClass({displayName: 'TodoInput',
   handleSubmit: function(e) {
     e.preventDefault();
     var task = this.refs.task.getDOMNode().value.trim();
-    JEvents.dispatchEvent('TASK_ADDED', task);
+    jevents.dispatchEvent('TASK_ADDED', task);
     this.refs.task.getDOMNode().value = '';
     return;
   },
@@ -92,7 +92,7 @@ var TodoInput = React.createClass({displayName: 'TodoInput',
 var TodoClear = React.createClass({displayName: 'TodoClear',
 
     handleClick: function(){
-        JEvents.dispatchEvent('CLEAR_DONE_TASKS');
+        jevents.dispatchEvent('CLEAR_DONE_TASKS');
     },
 
     render: function(){
@@ -163,15 +163,15 @@ var Todo = React.createClass({displayName: 'Todo',
   render: function() {
     var self = this;
 
-    JEvents.addEventListener('TASK_ADDED', function(task){
+    jevents.addEventListener('TASK_ADDED', function(task){
       self.handleSubmit(task);
     });
 
-    JEvents.addEventListener('TASK_CHANGE_STATE', function(task){
+    jevents.addEventListener('TASK_CHANGE_STATE', function(task){
       self.updateTask(task);
     });
 
-    JEvents.addEventListener('CLEAR_DONE_TASKS', function(){
+    jevents.addEventListener('CLEAR_DONE_TASKS', function(){
       self.clearDone();
     });
 

@@ -50,15 +50,15 @@ var Todo = React.createClass({displayName: 'Todo',
   render: function() {
     var self = this;
 
-    JEvents.addEventListener('TASK_ADDED', function(task){
+    jevents.addEventListener('TASK_ADDED', function(task){
       self.handleSubmit(task);
     });
 
-    JEvents.addEventListener('TASK_CHANGE_STATE', function(task){
+    jevents.addEventListener('TASK_CHANGE_STATE', function(task){
       self.updateTask(task);
     });
 
-    JEvents.addEventListener('CLEAR_DONE_TASKS', function(){
+    jevents.addEventListener('CLEAR_DONE_TASKS', function(){
       self.clearDone();
     });
 

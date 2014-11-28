@@ -1,7 +1,7 @@
 var TodoClear = React.createClass({
 
     handleClick: function(){
-        JEvents.dispatchEvent('CLEAR_DONE_TASKS');
+        jevents.dispatchEvent('CLEAR_DONE_TASKS');
     },
 
     render: function(){

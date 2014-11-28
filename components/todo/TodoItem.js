@@ -1,7 +1,7 @@
 var TodoItem = React.createClass({
 
   changeState: function() {
-    JEvents.dispatchEvent('TASK_CHANGE_STATE', this.props.task);
+    jevents.dispatchEvent('TASK_CHANGE_STATE', this.props.task);
   },
 
   render: function(){

@@ -1,4 +1,4 @@
-var JEvents = new function(){
+var JEvents = function(){
 
     var self = this;
     var listeners = [];
