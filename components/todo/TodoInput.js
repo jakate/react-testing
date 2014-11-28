@@ -5,7 +5,6 @@ var TodoInput = React.createClass({
     var task = this.refs.task.getDOMNode().value.trim();
     jevents.dispatchEvent('TASK_ADDED', task);
     this.refs.task.getDOMNode().value = '';
-    return;
   },
 
   componentDidMount: function(){

@@ -7,6 +7,7 @@ var TodoItem = React.createClass({
   render: function(){
     var task = this.props.task;
     var doneDate;
+
     if(task.doneDate) {
       doneDate = <span className="date">
         ({task.doneDate})

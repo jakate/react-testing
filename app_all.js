@@ -47,6 +47,7 @@ var TodoItem = React.createClass({displayName: 'TodoItem',
   render: function(){
     var task = this.props.task;
     var doneDate;
+
     if(task.doneDate) {
       doneDate = React.createElement("span", {className: "date"}, 
         "(", task.doneDate, ")"
@@ -71,7 +72,6 @@ var TodoInput = React.createClass({displayName: 'TodoInput',
     var task = this.refs.task.getDOMNode().value.trim();
     jevents.dispatchEvent('TASK_ADDED', task);
     this.refs.task.getDOMNode().value = '';
-    return;
   },
 
   componentDidMount: function(){
@@ -91,23 +91,20 @@ var TodoInput = React.createClass({displayName: 'TodoInput',
 
 var TodoClear = React.createClass({displayName: 'TodoClear',
 
-    handleClick: function(){
-        jevents.dispatchEvent('CLEAR_DONE_TASKS');
-    },
+  handleClick: function(){
+    jevents.dispatchEvent('CLEAR_DONE_TASKS');
+  },
 
-    render: function(){
-        var doneCount = _.reject(this.props.data, function(task){
-            return task.done == false;
-        }).length;
+  render: function(){
+    var doneCount = this.props.doneCount;
+    var hideBtn = doneCount < 1;
 
-        var hideBtn = doneCount < 1;
-
-        return (
-            React.createElement("div", {className: hideBtn === true ? 'hide' : ''}, 
-                React.createElement("button", {onClick: this.handleClick}, "Poista valmiit (", doneCount, ")")
-            )
-        )
-    }
+    return (
+      React.createElement("div", {className: hideBtn === true ? 'hide' : ''}, 
+      React.createElement("button", {onClick: this.handleClick}, "Poista valmiit (", doneCount, ")")
+      )
+      )
+  }
 
 });
 
@@ -135,15 +132,15 @@ var Todo = React.createClass({displayName: 'Todo',
     this.setState({data: undone});
   },
 
-  updateTask: function(task){
+  changeTaskState: function(task){
     this.state.data.map(function(item){
       if(item.ts === task.ts) {
         task.done = task.done == false;
+        task.doneDate = null;
+
         if(task.done) {
           var today = new Date();
           task.doneDate = today.getDate() + "." + today.getMonth() + "." + today.getFullYear();
-        } else {
-          task.doneDate = null;
         }
       }
     });
@@ -156,30 +153,22 @@ var Todo = React.createClass({displayName: 'Todo',
   },
 
   getInitialState: function() {
+    jevents.addEventListener('TASK_ADDED', this.handleSubmit);
+    jevents.addEventListener('TASK_CHANGE_STATE', this.changeTaskState);
+    jevents.addEventListener('CLEAR_DONE_TASKS', this.clearDone);
+
     var data = JSON.parse(localStorage.getItem('todoItems')) || [];
     return { data: data };
   },
 
   render: function() {
-    var self = this;
-
-    jevents.addEventListener('TASK_ADDED', function(task){
-      self.handleSubmit(task);
-    });
-
-    jevents.addEventListener('TASK_CHANGE_STATE', function(task){
-      self.updateTask(task);
-    });
-
-    jevents.addEventListener('CLEAR_DONE_TASKS', function(){
-      self.clearDone();
-    });
+    var doneCount = _.reject(this.state.data, function(task){ return task.done == false; }).length;
 
     return (
       React.createElement("div", {className: "todoApp shadow"}, 
-        React.createElement(TodoInput, {submit: this.handleSubmit}), 
+        React.createElement(TodoInput, null), 
         React.createElement(TodoList, {data: this.state.data}), 
-        React.createElement(TodoClear, {data: this.state.data})
+        React.createElement(TodoClear, {doneCount: doneCount})
       )
     );
   }

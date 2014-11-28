@@ -1,21 +1,18 @@
 var TodoClear = React.createClass({
 
-    handleClick: function(){
-        jevents.dispatchEvent('CLEAR_DONE_TASKS');
-    },
+  handleClick: function(){
+    jevents.dispatchEvent('CLEAR_DONE_TASKS');
+  },
 
-    render: function(){
-        var doneCount = _.reject(this.props.data, function(task){
-            return task.done == false;
-        }).length;
+  render: function(){
+    var doneCount = this.props.doneCount;
+    var hideBtn = doneCount < 1;
 
-        var hideBtn = doneCount < 1;
-
-        return (
-            <div className={hideBtn === true ? 'hide' : ''}>
-                <button onClick={this.handleClick}>Poista valmiit ({doneCount})</button>
-            </div>
-        )
-    }
+    return (
+      <div className={hideBtn === true ? 'hide' : ''}>
+      <button onClick={this.handleClick}>Poista valmiit ({doneCount})</button>
+      </div>
+      )
+  }
 
 });

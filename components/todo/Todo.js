@@ -22,15 +22,15 @@ var Todo = React.createClass({displayName: 'Todo',
     this.setState({data: undone});
   },
 
-  updateTask: function(task){
+  changeTaskState: function(task){
     this.state.data.map(function(item){
       if(item.ts === task.ts) {
         task.done = task.done == false;
+        task.doneDate = null;
+
         if(task.done) {
           var today = new Date();
           task.doneDate = today.getDate() + "." + today.getMonth() + "." + today.getFullYear();
-        } else {
-          task.doneDate = null;
         }
       }
     });
@@ -43,30 +43,22 @@ var Todo = React.createClass({displayName: 'Todo',
   },
 
   getInitialState: function() {
+    jevents.addEventListener('TASK_ADDED', this.handleSubmit);
+    jevents.addEventListener('TASK_CHANGE_STATE', this.changeTaskState);
+    jevents.addEventListener('CLEAR_DONE_TASKS', this.clearDone);
+
     var data = JSON.parse(localStorage.getItem('todoItems')) || [];
     return { data: data };
   },
 
   render: function() {
-    var self = this;
-
-    jevents.addEventListener('TASK_ADDED', function(task){
-      self.handleSubmit(task);
-    });
-
-    jevents.addEventListener('TASK_CHANGE_STATE', function(task){
-      self.updateTask(task);
-    });
-
-    jevents.addEventListener('CLEAR_DONE_TASKS', function(){
-      self.clearDone();
-    });
+    var doneCount = _.reject(this.state.data, function(task){ return task.done == false; }).length;
 
     return (
       <div className='todoApp shadow'>
-        <TodoInput submit={this.handleSubmit} />
+        <TodoInput />
         <TodoList data={this.state.data} />
-        <TodoClear data={this.state.data} />
+        <TodoClear doneCount={doneCount} />
       </div>
     );
   }
