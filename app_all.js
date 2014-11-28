@@ -1,5 +1,3 @@
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-
 var TodoList = React.createClass({displayName: 'TodoList',
 
   render: function() {
@@ -9,7 +7,10 @@ var TodoList = React.createClass({displayName: 'TodoList',
 
     items = items.map(function (task) {
         return (
-          React.createElement(TodoItem, {task: task, className: task.done === true ? 'done' : 'undone', key: task.ts, update: self.updateItems})
+          React.createElement(TodoItem, {
+            task: task, 
+            className: task.done === true ? 'done' : 'undone', 
+            key: task.ts})
         );
     });
 
@@ -17,7 +18,10 @@ var TodoList = React.createClass({displayName: 'TodoList',
     if(done.length > 0) {
       done = done.map(function (task) {
           return (
-            React.createElement(TodoItem, {task: task, className: task.done === true ? 'done' : 'undone', key: task.ts})
+            React.createElement(TodoItem, {
+              task: task, 
+              className: task.done === true ? 'done' : 'undone', 
+              key: task.ts})
           );
       });
 
@@ -70,7 +74,7 @@ var TodoInput = React.createClass({displayName: 'TodoInput',
   handleSubmit: function(e) {
     e.preventDefault();
     var task = this.refs.task.getDOMNode().value.trim();
-    jevents.dispatchEvent('TASK_ADDED', task);
+    jevents.dispatchEvent('ADD_TASK', task);
     this.refs.task.getDOMNode().value = '';
   },
 
@@ -101,7 +105,7 @@ var TodoClear = React.createClass({displayName: 'TodoClear',
 
     return (
       React.createElement("div", {className: hideBtn === true ? 'hide' : ''}, 
-      React.createElement("button", {onClick: this.handleClick}, "Poista valmiit (", doneCount, ")")
+        React.createElement("button", {onClick: this.handleClick}, "Poista valmiit (", doneCount, ")")
       )
       )
   }
@@ -110,26 +114,26 @@ var TodoClear = React.createClass({displayName: 'TodoClear',
 
 var Todo = React.createClass({displayName: 'Todo',
 
-  handleSubmit: function(task){
-    var today = new Date();
-
+  addTask: function(task){
     this.state.data.unshift({
       label: task,
       done: false,
-      ts: today.getTime()
+      ts: new Date().getTime()
     });
 
-    localStorage.setItem('todoItems', JSON.stringify(this.state.data));
+    this.saveState(this.state.data);
+  },
 
-    this.setState({data: this.state.data});
+  saveState: function(data){
+      localStorage.setItem('todoItems', JSON.stringify(data));
+      this.setState({data: data});
   },
 
   clearDone: function(){
     var undone =_.reject(this.state.data, function(task){
       return task.done == true;
     });
-    localStorage.setItem('todoItems', JSON.stringify(undone));
-    this.setState({data: undone});
+    this.saveState(undone);
   },
 
   changeTaskState: function(task){
@@ -153,7 +157,7 @@ var Todo = React.createClass({displayName: 'Todo',
   },
 
   getInitialState: function() {
-    jevents.addEventListener('TASK_ADDED', this.handleSubmit);
+    jevents.addEventListener('ADD_TASK', this.addTask);
     jevents.addEventListener('TASK_CHANGE_STATE', this.changeTaskState);
     jevents.addEventListener('CLEAR_DONE_TASKS', this.clearDone);
 

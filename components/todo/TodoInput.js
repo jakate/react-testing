@@ -3,7 +3,7 @@ var TodoInput = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
     var task = this.refs.task.getDOMNode().value.trim();
-    jevents.dispatchEvent('TASK_ADDED', task);
+    jevents.dispatchEvent('ADD_TASK', task);
     this.refs.task.getDOMNode().value = '';
   },
 

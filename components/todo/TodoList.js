@@ -1,5 +1,3 @@
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-
 var TodoList = React.createClass({
 
   render: function() {
@@ -9,7 +7,10 @@ var TodoList = React.createClass({
 
     items = items.map(function (task) {
         return (
-          <TodoItem task={task} className={task.done === true ? 'done' : 'undone'} key={task.ts} update={self.updateItems}/>
+          <TodoItem
+            task={task}
+            className={task.done === true ? 'done' : 'undone'}
+            key={task.ts}/>
         );
     });
 
@@ -17,7 +18,10 @@ var TodoList = React.createClass({
     if(done.length > 0) {
       done = done.map(function (task) {
           return (
-            <TodoItem task={task} className={task.done === true ? 'done' : 'undone'} key={task.ts} />
+            <TodoItem
+              task={task}
+              className={task.done === true ? 'done' : 'undone'}
+              key={task.ts} />
           );
       });
 

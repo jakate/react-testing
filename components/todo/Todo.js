@@ -1,25 +1,25 @@
 var Todo = React.createClass({displayName: 'Todo',
 
-  handleSubmit: function(task){
-    var today = new Date();
-
+  addTask: function(task){
     this.state.data.unshift({
       label: task,
       done: false,
-      ts: today.getTime()
+      ts: new Date().getTime()
     });
 
-    localStorage.setItem('todoItems', JSON.stringify(this.state.data));
+    this.saveState(this.state.data);
+  },
 
-    this.setState({data: this.state.data});
+  saveState: function(data){
+      localStorage.setItem('todoItems', JSON.stringify(data));
+      this.setState({data: data});
   },
 
   clearDone: function(){
     var undone =_.reject(this.state.data, function(task){
       return task.done == true;
     });
-    localStorage.setItem('todoItems', JSON.stringify(undone));
-    this.setState({data: undone});
+    this.saveState(undone);
   },
 
   changeTaskState: function(task){
@@ -43,7 +43,7 @@ var Todo = React.createClass({displayName: 'Todo',
   },
 
   getInitialState: function() {
-    jevents.addEventListener('TASK_ADDED', this.handleSubmit);
+    jevents.addEventListener('ADD_TASK', this.addTask);
     jevents.addEventListener('TASK_CHANGE_STATE', this.changeTaskState);
     jevents.addEventListener('CLEAR_DONE_TASKS', this.clearDone);
 
