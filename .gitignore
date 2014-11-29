@@ -1,6 +1,6 @@
 node_modules
 bower_components
 assets/css/dist/
-app_all.js
+react_components.js
 .DS_Store
 .Trashes

@@ -21,7 +21,7 @@ module.exports = function(grunt) {
     react: {
       jsx: {
         files: {
-          'app_all.js': [
+          'react_components.js': [
           'components/todo/TodoList.js',
           'components/todo/TodoItem.js',
           'components/todo/TodoInput.js',
