@@ -9,3 +9,5 @@ To run the project:
  	$ grunt
 
 Then run what evenr server to host the index.html file.
+
+![](https://github.com/jakate/react-testing/blob/master/screenshot.png)
