@@ -2,7 +2,7 @@ Testing Reactjs with small todo app
 =============
 This is my test project with Reactjs
 
-To test the project run:
+To run the project:
 
 	$ npm install
  	$ bower install
