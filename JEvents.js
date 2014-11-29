@@ -11,13 +11,11 @@ var JEvents = function(){
     };
 
     this.dispatchEvent = function(eventName, params) {
-        var listener = _.find(listeners, function(listener){
-            return listener.eventName === eventName
+        var listener = _.each(listeners, function(listener){
+            if(listener.eventName === eventName) {
+                listener.callback(params);
+            }
         });
-
-        if(listener){
-            listener.callback(params);
-        }
     };
 
 };
