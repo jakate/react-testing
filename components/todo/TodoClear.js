@@ -10,7 +10,7 @@ var TodoClear = React.createClass({
 
     return (
       <div className={hideBtn === true ? 'hide' : ''}>
-        <button onClick={this.handleClick}>Poista valmiit ({doneCount})</button>
+        <button onClick={this.handleClick}>Clear done ({doneCount})</button>
       </div>
       )
   }

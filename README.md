@@ -1,6 +1,6 @@
 Testing Reactjs
 =============
-This is a small todo-app built with Reactjs. (Finnish)
+This is a small todo-app built with Reactjs.
 
 To run the project:
 

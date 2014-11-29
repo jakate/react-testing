@@ -1,5 +1,4 @@
 var jevents = new JEvents();
-moment.locale("fi");
 
 React.render(
   React.createElement(Todo, null),
