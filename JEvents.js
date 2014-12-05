@@ -3,10 +3,17 @@ var JEvents = function(){
     var self = this;
     var listeners = [];
 
-    this.addEventListener = function(eventName, callback){
+    this.addEventListener = function(caller, eventName, callback){
         listeners.push({
+            caller: caller,
             eventName: eventName,
             callback: callback
+        });
+    };
+
+    this.removeEventListener = function(caller, eventName){
+        listeners = _.reject(listeners, function(listener){
+            return listener.eventName === eventName && listener.caller === caller;
         });
     };
 

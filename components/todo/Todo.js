@@ -43,9 +43,9 @@ var Todo = React.createClass({displayName: 'Todo',
   },
 
   getInitialState: function() {
-    jevents.addEventListener('ADD_TASK', this.addTask);
-    jevents.addEventListener('TASK_CHANGE_STATE', this.changeTaskState);
-    jevents.addEventListener('CLEAR_DONE_TASKS', this.clearDone);
+    jevents.addEventListener(this, 'ADD_TASK', this.addTask);
+    jevents.addEventListener(this, 'TASK_CHANGE_STATE', this.changeTaskState);
+    jevents.addEventListener(this, 'CLEAR_DONE_TASKS', this.clearDone);
 
     var data = JSON.parse(localStorage.getItem('todoItems')) || [];
     return { data: data };
